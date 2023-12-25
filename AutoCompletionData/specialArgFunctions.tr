@@ -1,0 +1,32 @@
+{
+	"clusterPropGet" -> {
+		0,
+		{
+			"clusterName", 
+			"planetList", 
+			"planetCommonData", 
+			"planetExtraData", 
+			"planetMergeData", 
+			"starList", 
+			"starData", 
+			"starDefaultList", 
+			"starDefaultData", 
+			"property", 
+			"data"
+		}
+	},
+	"clusterPropSet" -> {
+		0,
+		{
+			"clusterName", 
+			"planetList", 
+			"planetCommonData", 
+			"planetExtraData", 
+			"planetMergeData", 
+			"starList", 
+			"starData", 
+			"starDefaultList", 
+			"starDefaultData"
+		}
+	}
+}

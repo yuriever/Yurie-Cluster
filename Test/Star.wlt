@@ -1,0 +1,128 @@
+VerificationTest[
+    Begin["Global`"]
+    ,
+    "Global`"
+    ,
+    TestID->"init"
+]
+
+VerificationTest[
+    clusterInit[{"cluster1","Global`"},
+        {planet1,planet2,planet3,planet4},
+        {{a[1]},{b[1]},{c[1]},{d[1]}},
+        {{a[0]},{b[0]},{c[0]},{d[0]}},
+        {Join,Sort@*Join,Union,Sort@*Union}
+    ];
+    cluster1["data"]
+    ,
+    <|
+        "clusterName"->"cluster1",
+        "planetList"->{planet1,planet2,planet3,planet4},
+        "planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,
+        "planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,
+        "planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,
+        "starList"->{},
+        "starData"-><||>,
+        "starDefaultList"->{},
+        "starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>
+    |>
+    ,
+    TestID->"clusterInit"
+]
+
+VerificationTest[
+    starDefine[cluster1,{star1,star2}];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,star2-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>|>,"starDefaultList"->{},"starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>|>
+    ,
+    TestID->"starDefine"
+]
+
+VerificationTest[
+    starDefine[cluster2,{star1}]
+    ,
+    starDefine[cluster2,{star1}]
+    ,
+    TestID->"starDefine-invalid-cluster"
+]
+
+VerificationTest[
+    starDefine[cluster1,{star1}];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,star2-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>|>,"starDefaultList"->{},"starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>|>
+    ,
+    {Yurie`Cluster`Star`starDefineCheck::stardef}
+    ,
+    TestID->"starDefine-report-defined-star"
+]
+
+VerificationTest[
+    starDefault[cluster1,{star3}];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,star2-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>|>,"starDefaultList"->{},"starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>|>
+    ,
+    {Yurie`Cluster`Star`starDefineCheck::starundef}
+    ,
+    TestID->"starDefault-report-undefined-star"
+]
+
+VerificationTest[
+    starDefault[cluster1,{star1,star2}];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,star2-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>|>,"starDefaultList"->{star1,star2},"starDefaultData"-><|planet1->{a[0],a[1],a[1]},planet2->{b[0],b[1],b[1]},planet3->{c[0],c[1]},planet4->{d[0],d[1]}|>|>
+    ,
+    TestID->"starDefault"
+]
+
+VerificationTest[
+    starMerge[cluster1,{star1,star2},<|planet1->{a[11]},planet2->{b[11]},planet3->{c[11]},planet4->{d[11]}|>];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1],a[11]},planet2->{b[1],b[11]},planet3->{c[1],c[11]},planet4->{d[1],d[11]}|>,star2-><|planet1->{a[1],a[11]},planet2->{b[1],b[11]},planet3->{c[1],c[11]},planet4->{d[1],d[11]}|>|>,"starDefaultList"->{star1,star2},"starDefaultData"-><|planet1->{a[0],a[1],a[11],a[1],a[11]},planet2->{b[0],b[1],b[1],b[11],b[11]},planet3->{c[0],c[1],c[11]},planet4->{d[0],d[1],d[11]}|>|>
+    ,
+    TestID->"starMerge"
+]
+
+VerificationTest[
+    starChange[cluster1,{star1,star2},<|planet2->{b[11]}|>,{planet2->Complement}];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1],a[11]},planet2->{b[1]},planet3->{c[1],c[11]},planet4->{d[1],d[11]}|>,star2-><|planet1->{a[1],a[11]},planet2->{b[1]},planet3->{c[1],c[11]},planet4->{d[1],d[11]}|>|>,"starDefaultList"->{star1,star2},"starDefaultData"-><|planet1->{a[0],a[1],a[11],a[1],a[11]},planet2->{b[0],b[1],b[1]},planet3->{c[0],c[1],c[11]},planet4->{d[0],d[1],d[11]}|>|>
+    ,
+    TestID->"starChange"
+]
+
+VerificationTest[
+    starReset[cluster1,{star1}];
+    starReset[cluster1,{star2}];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,star2-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>|>,"starDefaultList"->{star1,star2},"starDefaultData"-><|planet1->{a[0],a[1],a[1]},planet2->{b[0],b[1],b[1]},planet3->{c[0],c[1]},planet4->{d[0],d[1]}|>|>
+    ,
+    TestID->"starReset"
+]
+
+VerificationTest[
+    starUnset[cluster1,{star1}];
+    starUnset[cluster1,{star2}];
+    cluster1["data"]
+    ,
+    <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{},"starData"-><||>,"starDefaultList"->{},"starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>|>
+    ,
+    {Yurie`Cluster`starUnset::rmdefault,Yurie`Cluster`starUnset::rmdefault}
+    ,
+    TestID->"starUnset"
+]
+
+VerificationTest[
+    ClearAll["cluster1"];
+    End[]
+    ,
+    "Global`"
+    ,
+    TestID->"cleanup"
+]

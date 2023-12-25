@@ -1,0 +1,15 @@
+.gitattributes
+
+# Mac files
+.DS_Store
+
+# Eclipse files
+.project
+.metadata
+.settings
+
+# notebook directory
+Notebook
+
+# developer directory
+Workbench
