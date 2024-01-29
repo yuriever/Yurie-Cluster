@@ -20,12 +20,7 @@ PacletObject[
       {
         "Kernel",
         "Root" -> "Utility",
-        "Context" -> {"Yurie`Cluster`"}
-      },
-      {
-        "Documentation",
-        "Root" -> "Documentation",
-        "Language" -> "English"
+        "Context" -> {"Yurie`Cluster`Info`","Yurie`Cluster`Test`"}
       },
       (*{
         "AutoCompletionData",
@@ -37,7 +32,6 @@ PacletObject[
         "Assets" -> {
           {"License", "LICENSE"},
           {"ReadMe", "README.md"},
-          {"Sample", "Sample"},
           {"Test", "Test"}
         }
       }

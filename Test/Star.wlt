@@ -1,7 +1,8 @@
 VerificationTest[
-    Begin["Global`"]
+    Begin["Global`"];
+    Get["Yurie`Cluster`"];
     ,
-    "Global`"
+    Null
     ,
     TestID->"init"
 ]
