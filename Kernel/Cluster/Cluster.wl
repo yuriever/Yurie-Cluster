@@ -134,7 +134,7 @@ clusterQ//Attributes =
     {HoldFirst};
 
 clusterQ[self_Symbol] :=
-	Head@self===cluster;
+    Head@self===cluster;
 
 
 (* ::Subsection:: *)
@@ -157,7 +157,7 @@ clusterPropSet//Attributes =
 
 clusterPropSet[self_Symbol,keyValueOrItsList_] :=
     With[ {data = clusterStrip[self,"data"]},
-		(*the symbol should be rebound to the new cluster.*)
+        (*the symbol should be rebound to the new cluster.*)
         self = cluster[<|data,keyValueOrItsList|>]
     ];
 
