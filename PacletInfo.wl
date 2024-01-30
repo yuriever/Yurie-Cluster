@@ -22,10 +22,10 @@ PacletObject[
         "Root" -> "Utility",
         "Context" -> {"Yurie`Cluster`Info`","Yurie`Cluster`Test`"}
       },
-      (*{
+      {
         "AutoCompletionData",
         "Root" -> "AutoCompletionData"
-      },*)
+      },
       {
         "Asset",
         "Root" -> ".",

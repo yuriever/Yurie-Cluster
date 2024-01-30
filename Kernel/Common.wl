@@ -23,8 +23,11 @@ BeginPackage["Yurie`Cluster`Common`"];
 (*Utilities*)
 
 
-messageHideContext;
-mergeByKey;
+messageHideContext::usage = 
+    "hide the context in messages.";
+
+clusterDataMerge::usage =
+    "merge a list of associations using different merge functions according to keys.";
 
 
 (* ::Section:: *)
@@ -55,13 +58,10 @@ messageHideContext[args__] :=
     ];
 
 
-mergeByKey::usage =
-    "merge a list of associations using different merge functions according to keys. The default merging function is Identity.";
+clusterDataMerge[ruleAssoc_,default:_:Identity][data_List] :=
+    clusterDataMergeKernel[data,Normal[Apply/@ruleAssoc],default];
 
-mergeByKey[ruleAssoc_,default:_:Identity][data_List] :=
-    mergeByKeyKernel[data,Normal[Apply/@ruleAssoc],default];
-
-mergeByKeyKernel[data_,ruleList_,default_] :=
+clusterDataMergeKernel[data_,ruleList_,default_] :=
     Module[ {missingToken,assoc,keys,queryRules,mergeRules},
         (*missingToken: unique symbol that is used for identifying where the undefined keys were after transposing the association *)
         mergeRules = 

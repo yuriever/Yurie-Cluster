@@ -15,20 +15,20 @@ Needs["Yurie`Cluster`Common`"];
 (*Public*)
 
 
-cluster;
-clusterInit;
-clusterPropGet;
-clusterPropSet;
+cluster::usage = 
+    "head of cluster.";
 
+clusterQ::usage = 
+    "check whether the input is a cluster.";
 
-clusterValidQ::usage = 
-    "whether the input is a valid cluster.";
+clusterInit::usage = 
+    "initiate cluster and bind to the symbol \"context`clusterName\".";
 
-clusterPropGetUnsafe::usage = 
-	"clusterPropGet without clusterValidQ.";
+clusterPropGet::usage = 
+    "get property of the cluster.";
 
-clusterPropSetUnsafe::usage = 
-	"clusterPropSet without clusterValidQ.";
+clusterPropSet::usage = 
+    "set property of the cluster.";
 
 
 (* ::Section:: *)
@@ -40,14 +40,6 @@ clusterPropSetUnsafe::usage =
 
 
 Begin["`Private`"];
-
-
-(* ::Subsection:: *)
-(*Messages*)
-
-
-clusterValidQ::undef = 
-	"`` is not a valid cluster."
 
 
 (* ::Subsection:: *)
@@ -65,9 +57,6 @@ $clusterKeyList = {
     "starDefaultList",
     "starDefaultData"
 };
-
-$clusterKeySortedList = 
-	Sort@$clusterKeyList;
 
 $clusterPropList = {
     Splice@$clusterKeyList,
@@ -116,11 +105,15 @@ clusterInit[
 
 
 (* ::Subsection:: *)
-(*clusterPropGet*)
+(*cluster*)
 
 
-cl_cluster[property_]:=
+cl_cluster[property_] :=
     clusterStrip[cl,property];
+
+
+(* ::Subsection:: *)
+(*clusterStrip*)
 
 
 clusterStrip[_cluster,"property"] :=
@@ -133,54 +126,40 @@ clusterStrip[cluster[data_],keyOrItsList_] :=
     data[[keyOrItsList]];
 
 
-clusterValidQ//Attributes = 
+(* ::Subsection:: *)
+(*clusterQ*)
+
+
+clusterQ//Attributes = 
     {HoldFirst};
 
-clusterValidQ[self_Symbol] :=
+clusterQ[self_Symbol] :=
 	Head@self===cluster;
 
-(*clusterValidQ[self_Symbol] :=
-    Module[ {data},
-        Head@self===cluster&&(
-        	data = clusterStrip[self,"data"];
-            Sort@Keys@data===$clusterKeySortedList&&Sort@data["starList"]===Sort@Keys@data["starData"]
-    	)
-    ];*)
 
-
-clusterPropGetUnsafe//Attributes = 
-    {HoldFirst};
-
-clusterPropGetUnsafe[self_,propertyOrItsList_] :=
-    clusterStrip[self,propertyOrItsList];
-
-
-clusterPropSetUnsafe//Attributes = 
-    {HoldFirst};
-
-(*the symbol should be rebound to the new cluster.*)
-clusterPropSetUnsafe[self_,keyValueOrItsList_] :=
-    With[ {data = clusterStrip[self,"data"]},
-        self = cluster[<|data,keyValueOrItsList|>]
-    ];
+(* ::Subsection:: *)
+(*clusterPropGet*)
 
 
 clusterPropGet//Attributes = 
     {HoldFirst};
 
-clusterPropGet[self_Symbol?clusterValidQ,propertyOrItsList_]:=
-	clusterStrip[self,propertyOrItsList];
+clusterPropGet[self_Symbol,propertyOrItsList_] :=
+    clusterStrip[self,propertyOrItsList];
+
+
+(* ::Subsection:: *)
+(*clusterPropSet*)
 
 
 clusterPropSet//Attributes = 
     {HoldFirst};
 
-(*the symbol should be rebound to the new cluster.*)
-clusterPropSet[self_Symbol?clusterValidQ,keyValueOrItsList_] :=
+clusterPropSet[self_Symbol,keyValueOrItsList_] :=
     With[ {data = clusterStrip[self,"data"]},
+		(*the symbol should be rebound to the new cluster.*)
         self = cluster[<|data,keyValueOrItsList|>]
     ];
-
 
 
 (* ::Subsection:: *)
