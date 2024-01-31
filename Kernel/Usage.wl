@@ -1,3 +1,7 @@
+
+
+(*Cluster.wl*)
+
 cluster::usage = 
 	"head of cluster.";
 clusterQ::usage = 
@@ -8,6 +12,10 @@ clusterPropGet::usage =
 	"get property of the cluster.";
 clusterPropSet::usage = 
 	"set property of the cluster.";
+
+
+(*Star.wl*)
+
 starDefine::usage = 
 	"define the stars.";
 starDefault::usage = 
