@@ -15,14 +15,6 @@ BeginPackage["Yurie`Cluster`Common`"];
 (*Public*)
 
 
-(* ::Subsection:: *)
-(*Symbols*)
-
-
-(* ::Subsection:: *)
-(*Utilities*)
-
-
 messageHideContext::usage = 
     "hide the context in messages.";
 
@@ -42,11 +34,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Symbols*)
-
-
-(* ::Subsection:: *)
-(*Utilities*)
+(*Main*)
 
 
 messageHideContext//Attributes = 

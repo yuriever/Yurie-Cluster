@@ -11,12 +11,8 @@ BeginPackage["Yurie`Cluster`Info`"];
 (*Public*)
 
 
-(* ::Subsection:: *)
-(*Symbols*)
-
-
 $thisPacletDir;
-$thisSampleDir;
+$thisKernelDir;
 $thisTestDir;
 
 
@@ -24,7 +20,7 @@ $thisTestDir;
 (*Private*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Begin*)
 
 
@@ -32,7 +28,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Symbols*)
+(*Main*)
 
 
 $thisPaclet = 
@@ -41,14 +37,14 @@ $thisPaclet =
 $thisPacletDir = 
     $thisPaclet["Location"];
 
-$thisSampleDir = 
-    $thisPaclet["AssetLocation","Sample"];
+$thisKernelDir = 
+    FileNameJoin@{$thisPacletDir,"Kernel"};
 
 $thisTestDir = 
     $thisPaclet["AssetLocation","Test"];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*End*)
 
 

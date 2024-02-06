@@ -53,7 +53,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Messages and attributes*)
+(*Message*)
 
 
 starDefineQ::usage = 
@@ -84,6 +84,10 @@ starDefineCheck::memundef =
 
 starUnset::rmdefault =
     "the following stars `` have been removed from default.";
+
+
+(* ::Subsection:: *)
+(*Attribute*)
 
 
 SetAttributes[{

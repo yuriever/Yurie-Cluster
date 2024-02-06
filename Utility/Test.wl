@@ -14,14 +14,15 @@ Needs["Yurie`Cluster`Info`"];
 (*Public*)
 
 
-getReport;
+testReport::usage = 
+    "get the report of unit test.";
 
 
 (* ::Section:: *)
 (*Private*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Begin*)
 
 
@@ -29,10 +30,10 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Functions*)
+(*Main*)
 
 
-getReport[] :=
+testReport[] :=
     Module[ {report,selectedData},
         report = 
             TestReport@FileNames["*.wlt",$thisTestDir];
@@ -53,7 +54,7 @@ getReport[] :=
     ];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*End*)
 
 
@@ -65,6 +66,3 @@ End[];
 
 
 EndPackage[];
-
-
-getReport[];

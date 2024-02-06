@@ -15,12 +15,17 @@ PacletObject[
       {
         "Kernel",
         "Root" -> "Kernel",
-        "Context" -> {"Yurie`Cluster`"}
+        "Context" -> {
+          "Yurie`Cluster`"
+        }
       },
       {
         "Kernel",
         "Root" -> "Utility",
-        "Context" -> {"Yurie`Cluster`Info`","Yurie`Cluster`Test`"}
+        "Context" -> {
+          "Yurie`Cluster`Info`",
+          "Yurie`Cluster`Test`"
+        }
       },
       {
         "AutoCompletionData",

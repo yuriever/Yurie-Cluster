@@ -43,7 +43,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Constants*)
+(*Constant*)
 
 
 $clusterKeyList = {

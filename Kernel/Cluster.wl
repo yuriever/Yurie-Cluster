@@ -18,7 +18,7 @@ Get["Yurie`Cluster`Usage`"];
 
 
 (* ::Subsection:: *)
-(*Subpackages*)
+(*Subpackage*)
 
 
 Get["Yurie`Cluster`Cluster`"];
