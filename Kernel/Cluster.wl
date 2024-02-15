@@ -11,9 +11,6 @@ BeginPackage["Yurie`Cluster`"];
 (*ClearAll["`*`*"];*)
 
 
-Get["Yurie`Cluster`Common`"];
-
-
 Get["Yurie`Cluster`Usage`"];
 
 

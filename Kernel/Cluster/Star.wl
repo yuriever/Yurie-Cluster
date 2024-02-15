@@ -8,8 +8,6 @@ BeginPackage["Yurie`Cluster`Star`"];
 
 
 Needs["Yurie`Cluster`"];
-Needs["Yurie`Cluster`Common`"];
-Needs["Yurie`Cluster`Cluster`"];
 
 
 (* ::Section:: *)
@@ -33,7 +31,8 @@ starMerge::usage =
 
 starChange::usage = 
     "change planet data to the stars by the functions.";
-    
+
+
 starPreIntercept::usage = 
     "reserved function to modify the pre-process of star methods.";
 
@@ -68,19 +67,19 @@ starUpdateDefault::usage =
 starUpdateDefaultWhenUnset::usage =
     "remove the stars both in the input and the default star list, used by starUnset.";
 
-starMergeKernel::usage = 
-    "kernel function.";
-
-starChangeKernel::usage = 
-    "kernel function.";
+clusterDataMerge::usage =
+    "merge a list of associations using different merge functions according to keys.";
 
 
 starDefineCheck::starundef =
     "the star `` is undefined.";
+
 starDefineCheck::stardef =
     "the star `` has been defined.";
+
 starDefineCheck::memundef =
     "the planet `` is undefined.";
+
 
 starUnset::rmdefault =
     "the following stars `` have been removed from default.";
@@ -106,6 +105,56 @@ SetAttributes[{
     starChange,
     starChangeKernel
 },HoldFirst];
+
+
+(* ::Subsection:: *)
+(*clusterDataMerge*)
+
+
+clusterDataMerge[ruleAssoc_,default:_:Identity][data_List] :=
+    clusterDataMergeKernel[data,Normal[Apply/@ruleAssoc],default];
+
+clusterDataMergeKernel[data_,ruleList_,default_] :=
+    Module[ {missingToken,assoc,keys,queryRules,mergeRules},
+        (*missingToken: unique symbol that is used for identifying where the undefined keys were after transposing the association *)
+        mergeRules = 
+            Replace[
+                Flatten@Replace[
+                    ruleList,
+                    Verbatim[Rule][list_List,fun_]:>Thread[list->fun],
+                    {1}
+                ],
+                Verbatim[Rule][Key[k_],fun_]:>Rule[k,fun],
+                {1}
+            ];
+        (*avoid KeyUnion if it's not necessary.*)
+        If[ SameQ@@Keys[data],
+            assoc = data,
+            assoc = KeyUnion[DeleteCases[data,<||>],missingToken&]
+        ];
+        keys = Keys@First@assoc;
+        (*this is essentially how GeneralUtilities`AssociationTranspose works.*)
+        assoc = 
+            AssociationThread[
+                keys,
+                If[ SameQ@@Keys[data],
+                    Transpose@Values[assoc],
+                    DeleteCases[Transpose@Values[assoc],missingToken,{2}]
+                ]
+            ];
+        keys = Key/@keys;
+        queryRules = 
+            DeleteCases[
+                Thread[
+                    keys->Lookup[mergeRules,keys,default]
+                ],
+                _->Identity
+            ];
+        If[ MatchQ[queryRules,{__Rule}],
+            Query[queryRules]@assoc,
+            assoc
+        ]
+    ];
 
 
 (* ::Subsection:: *)
@@ -160,6 +209,15 @@ starDefineCheck[cluster_,"planetAbortUndef",planetList_] :=
             messageHideContext[starDefineCheck::memundef,planetUndefList];
             Abort[]
         ];
+    ];
+
+
+messageHideContext//Attributes = 
+    {HoldFirst};
+
+messageHideContext[args__] :=
+    Block[ {Internal`$ContextMarks = False},
+        Message[args]
     ];
 
 

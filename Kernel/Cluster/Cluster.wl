@@ -8,7 +8,6 @@ BeginPackage["Yurie`Cluster`Cluster`"];
 
 
 Needs["Yurie`Cluster`"];
-Needs["Yurie`Cluster`Common`"];
 
 
 (* ::Section:: *)
