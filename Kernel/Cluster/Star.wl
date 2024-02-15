@@ -67,9 +67,6 @@ starUpdateDefault::usage =
 starUpdateDefaultWhenUnset::usage =
     "remove the stars both in the input and the default star list, used by starUnset.";
 
-clusterDataMerge::usage =
-    "merge a list of associations using different merge functions according to keys.";
-
 
 starDefineCheck::starundef =
     "the star `` is undefined.";
@@ -111,8 +108,12 @@ SetAttributes[{
 (*clusterDataMerge*)
 
 
-clusterDataMerge[ruleAssoc_,default:_:Identity][data_List] :=
-    clusterDataMergeKernel[data,Normal[Apply/@ruleAssoc],default];
+clusterDataMerge::usage =
+    "merge a list of associations using different merge functions according to keys.";
+
+clusterDataMerge[ruleAssoc_][data_List] :=
+    clusterDataMergeKernel[data,Normal[Apply/@ruleAssoc],Identity];
+
 
 clusterDataMergeKernel[data_,ruleList_,default_] :=
     Module[ {missingToken,assoc,keys,queryRules,mergeRules},
@@ -183,7 +184,8 @@ starDefineQ[cluster_,starList_List] :=
 
 starDefineCheck[cluster_,"starReportUndefAndReturnDef",starList_] :=
     Module[ {starIfExist},
-        starIfExist = starDefineQ[cluster,starList];
+        starIfExist = 
+            starDefineQ[cluster,starList];
         If[ starIfExist[False]=!={},
             messageHideContext[starDefineCheck::starundef,starIfExist[False]]
         ];
@@ -192,7 +194,8 @@ starDefineCheck[cluster_,"starReportUndefAndReturnDef",starList_] :=
 
 starDefineCheck[cluster_,"starReportDefAndReturnUndef",starList_] :=
     Module[ {starIfExist},
-        starIfExist = starDefineQ[cluster,starList];
+        starIfExist = 
+            starDefineQ[cluster,starList];
         If[ starIfExist[True]=!={},
             messageHideContext[starDefineCheck::stardef,starIfExist[True]]
         ];
@@ -201,10 +204,11 @@ starDefineCheck[cluster_,"starReportDefAndReturnUndef",starList_] :=
     
 starDefineCheck[cluster_,"planetAbortUndef",planetList_] :=
     Module[ {planetUndefList},
-        planetUndefList = Complement[
-            planetList,
-            clusterPropGet[cluster,"planetList"]
-        ];
+        planetUndefList = 
+            Complement[
+                planetList,
+                clusterPropGet[cluster,"planetList"]
+            ];
         If[ planetUndefList=!={},
             messageHideContext[starDefineCheck::memundef,planetUndefList];
             Abort[]
@@ -229,10 +233,10 @@ starUpdateDefault[cluster_] :=
     Module[ {defaultStar},
         (*construct the default values from extra and input.*)
         defaultStar = 
-            clusterDataMerge[clusterPropGet[cluster,"planetMergeData"]]@Join[
+            Join[
                 {clusterPropGet[cluster,"planetExtraData"]},
                 clusterPropGet[cluster,"starData"]/@clusterPropGet[cluster,"starDefaultList"]
-            ];
+            ]//clusterDataMerge[clusterPropGet[cluster,"planetMergeData"]];
         (*update to the default star.*)
         starPreIntercept[cluster,"starUpdateDefault",defaultStar];
         clusterPropSet[cluster,"starDefaultData"->defaultStar];
@@ -250,14 +254,16 @@ starDefine[cluster_Symbol?clusterQ,starList_List] :=
         starUndefList = 
             starDefineCheck[cluster,"starReportDefAndReturnUndef",starList];
         (*build the new star list and data.*)
-        newStarList = Join[
-            clusterPropGet[cluster,"starList"],
-            starUndefList
-        ];
-        newStarData = <|
-            clusterPropGet[cluster,"starData"],
-            AssociationMap[clusterPropGet[cluster,"planetCommonData"]&,starUndefList]
-        |>; 
+        newStarList = 
+            Join[
+                clusterPropGet[cluster,"starList"],
+                starUndefList
+            ];
+        newStarData = 
+            <|
+                clusterPropGet[cluster,"starData"],
+                AssociationMap[clusterPropGet[cluster,"planetCommonData"]&,starUndefList]
+            |>; 
         (*define the new stars.*)
         starPreIntercept[cluster,"starDefine",starList];
         clusterPropSet[cluster,{"starList"->newStarList,"starData"->newStarData}];
@@ -293,10 +299,11 @@ starReset[cluster_Symbol?clusterQ,starList_List] :=
         starDefList = 
             starDefineCheck[cluster,"starReportUndefAndReturnDef",starList];
         (*build the data of reset stars.*)
-        newStarData = <|
-            clusterPropGet[cluster,"starData"],
-            AssociationMap[clusterPropGet[cluster,"planetCommonData"]&,starDefList]
-        |>; 
+        newStarData = 
+            <|
+                clusterPropGet[cluster,"starData"],
+                AssociationMap[clusterPropGet[cluster,"planetCommonData"]&,starDefList]
+            |>; 
         (*reset the stars.*)
         starPreIntercept[cluster,"starReset",starDefList];
         clusterPropSet[cluster,"starData"->newStarData];
@@ -316,14 +323,16 @@ starUnset[cluster_Symbol?clusterQ,starList_List] :=
         starDefList = 
             starDefineCheck[cluster,"starReportUndefAndReturnDef",starList];
         (*build the new star list and data.*)
-        newStarList = Complement[
-            clusterPropGet[cluster,"starList"],
-            starDefList
-        ];
-        newStarData = KeyDrop[
-            clusterPropGet[cluster,"starData"],
-            starDefList
-        ]; 
+        newStarList = 
+            Complement[
+                clusterPropGet[cluster,"starList"],
+                starDefList
+            ];
+        newStarData = 
+            KeyDrop[
+                clusterPropGet[cluster,"starData"],
+                starDefList
+            ]; 
         (*unset the stars.*)
         starPreIntercept[cluster,"starUnset",starDefList];
         clusterPropSet[cluster,{"starList"->newStarList,"starData"->newStarData}];
@@ -337,14 +346,16 @@ starUnset[cluster_Symbol?clusterQ,starList_List] :=
 
 starUpdateDefaultWhenUnset[cluster_,starList_] :=
     Module[ {removedDefaultList,leftDefaultList},
-        removedDefaultList = Intersection[
-            clusterPropGet[cluster,"starDefaultList"],
-            starList
-        ];
-        leftDefaultList = Complement[
-            clusterPropGet[cluster,"starDefaultList"],
-            starList
-        ];
+        removedDefaultList = 
+            Intersection[
+                clusterPropGet[cluster,"starDefaultList"],
+                starList
+            ];
+        leftDefaultList = 
+            Complement[
+                clusterPropGet[cluster,"starDefaultList"],
+                starList
+            ];
         If[ removedDefaultList=!={},
             Message[starUnset::rmdefault,removedDefaultList]
         ];
@@ -378,7 +389,7 @@ starMergeKernel[cluster_,star_,planetAssoc_] :=
         starData =
             clusterPropGet[cluster,"starData"];
         newPlanetData =
-            clusterDataMerge[clusterPropGet[cluster,"planetMergeData"]]@{starData[star],planetAssoc};
+            {starData[star],planetAssoc}//clusterDataMerge[clusterPropGet[cluster,"planetMergeData"]];
         newStarData =
             <|starData,star->newPlanetData|>;
         (*add to the star.*)
@@ -416,7 +427,7 @@ starChangeKernel[cluster_,star_,planetAssoc_,planetFunctionAssoc_] :=
         starData =
             clusterPropGet[cluster,"starData"];
         newPlanetData =
-            clusterDataMerge[planetFunctionAssoc,Apply[Identity]]@{starData[star],planetAssoc};
+            {starData[star],planetAssoc}//clusterDataMerge[planetFunctionAssoc,Apply[Identity]];
         newStarData =
             <|starData,star->newPlanetData|>;
         (*add to the star.*)
