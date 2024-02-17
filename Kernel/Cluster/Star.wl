@@ -52,6 +52,123 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Helper*)
+
+
+(* ::Subsubsection:: *)
+(*clusterDataMerge*)
+
+
+clusterDataMerge::usage =
+    "merge a list of associations using different merge functions according to keys.";
+
+clusterDataMerge[ruleAssoc_,default_:Identity][assocList:{___Association}] :=
+    mergeByKeyKernel[
+        assocList,
+        ruleAssoc//Map[Apply]//Normal,        
+        default
+    ];
+
+
+mergeByKeyKernel[{<||>...},_,_] :=
+    <||>;
+
+mergeByKeyKernel[assocList_,{},Identity] :=
+    (*in this case queryRuleList=={}, and Query[{}][...] will unexpectedly return an empty association.*)
+    getTransposedAssocListAndKeyList[assocList,{}]//First;
+
+mergeByKeyKernel[assocList_,ruleList_,default_] :=
+    Module[ {keyList,dataMerged,queryRuleList},
+        {dataMerged,keyList} =
+            getTransposedAssocListAndKeyList[assocList,ruleList];
+        queryRuleList =
+            prepareQueryRuleList[ruleList,keyList,default];
+        Query[queryRuleList]@dataMerged
+    ];
+
+
+getTransposedAssocListAndKeyList[assocList_,ruleList_] :=
+    Module[ {keyList,keyListList,dataPadded,dataMerged,missing},
+        keyListList = 
+            Keys[assocList];
+        (*pad the list of associations by the placeholder missing if necessary.*)
+        If[ SameQ@@keyListList,
+            keyList = 
+                First@keyListList;
+            dataMerged = 
+                AssociationThread[
+                    keyList,
+                    Transpose@Values[assocList]
+                ],
+            (*Else*)
+            dataPadded = 
+                KeyUnion[assocList,missing&];
+            keyList = 
+                Keys@First@dataPadded;
+            dataMerged = 
+                AssociationThread[
+                    keyList,
+                    DeleteCases[Transpose@Values[dataPadded],missing,{2}]
+                ];
+        ];
+        {dataMerged,Key/@keyList}
+    ];
+
+
+(*prepare the rules for query and delete the unnecessary Identity query.*)
+
+prepareQueryRuleList[ruleList_,keyList_,default_] :=
+    DeleteCases[
+        Thread[
+            keyList->Lookup[ruleList,keyList,default]
+        ],
+        _->Identity
+    ];
+
+
+
+(* ::Subsubsection:: *)
+(*messageHideContext*)
+
+
+messageHideContext//Attributes = 
+    {HoldFirst};
+
+messageHideContext[args__] :=
+    Block[ {Internal`$ContextMarks = False},
+        Message[args]
+    ];
+
+
+(* ::Subsection:: *)
+(*Main*)
+
+
+(* ::Subsubsection:: *)
+(*Attribute*)
+
+
+SetAttributes[{
+    starDefineQ,
+    starDefineCheck,
+    starUpdateDefault,
+    starUpdateDefaultWhenUnset,
+    (**)
+    starPreIntercept,
+    starPostIntercept,
+    (**)
+    starDefine,
+    starDefault,
+    starReset,
+    starUnset,
+    starMerge,
+    starMergeKernel,
+    starChange,
+    starChangeKernel
+},HoldFirst];
+
+
+(* ::Subsubsection:: *)
 (*Message*)
 
 
@@ -82,83 +199,7 @@ starUnset::rmdefault =
     "the following stars `` have been removed from default.";
 
 
-(* ::Subsection:: *)
-(*Attribute*)
-
-
-SetAttributes[{
-    starDefineQ,
-    starDefineCheck,
-    starUpdateDefault,
-    starPreIntercept,
-    starPostIntercept,
-    starDefine,
-    starDefault,
-    starReset,
-    starUnset,
-    starUpdateDefaultWhenUnset,
-    starMerge,
-    starMergeKernel,
-    starChange,
-    starChangeKernel
-},HoldFirst];
-
-
-(* ::Subsection:: *)
-(*clusterDataMerge*)
-
-
-clusterDataMerge::usage =
-    "merge a list of associations using different merge functions according to keys.";
-
-clusterDataMerge[ruleAssoc_][data_List] :=
-    clusterDataMergeKernel[data,Normal[Apply/@ruleAssoc],Identity];
-
-
-clusterDataMergeKernel[data_,ruleList_,default_] :=
-    Module[ {missingToken,assoc,keys,queryRules,mergeRules},
-        (*missingToken: unique symbol that is used for identifying where the undefined keys were after transposing the association *)
-        mergeRules = 
-            Replace[
-                Flatten@Replace[
-                    ruleList,
-                    Verbatim[Rule][list_List,fun_]:>Thread[list->fun],
-                    {1}
-                ],
-                Verbatim[Rule][Key[k_],fun_]:>Rule[k,fun],
-                {1}
-            ];
-        (*avoid KeyUnion if it's not necessary.*)
-        If[ SameQ@@Keys[data],
-            assoc = data,
-            assoc = KeyUnion[DeleteCases[data,<||>],missingToken&]
-        ];
-        keys = Keys@First@assoc;
-        (*this is essentially how GeneralUtilities`AssociationTranspose works.*)
-        assoc = 
-            AssociationThread[
-                keys,
-                If[ SameQ@@Keys[data],
-                    Transpose@Values[assoc],
-                    DeleteCases[Transpose@Values[assoc],missingToken,{2}]
-                ]
-            ];
-        keys = Key/@keys;
-        queryRules = 
-            DeleteCases[
-                Thread[
-                    keys->Lookup[mergeRules,keys,default]
-                ],
-                _->Identity
-            ];
-        If[ MatchQ[queryRules,{__Rule}],
-            Query[queryRules]@assoc,
-            assoc
-        ]
-    ];
-
-
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*starDefineQ*)
 
 
@@ -178,7 +219,7 @@ starDefineQ[cluster_,starList_List] :=
     |>;
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*starDefineCheck*)
 
 
@@ -216,17 +257,8 @@ starDefineCheck[cluster_,"planetAbortUndef",planetList_] :=
     ];
 
 
-messageHideContext//Attributes = 
-    {HoldFirst};
-
-messageHideContext[args__] :=
-    Block[ {Internal`$ContextMarks = False},
-        Message[args]
-    ];
-
-
-(* ::Subsection:: *)
-(*starDefaultUpdate*)
+(* ::Subsubsection:: *)
+(*starUpdateDefault*)
 
 
 starUpdateDefault[cluster_] :=
@@ -244,7 +276,30 @@ starUpdateDefault[cluster_] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
+(*starUpdateDefaultWhenUnset*)
+
+
+starUpdateDefaultWhenUnset[cluster_,starList_] :=
+    Module[ {removedDefaultList,leftDefaultList},
+        removedDefaultList = 
+            Intersection[
+                clusterPropGet[cluster,"starDefaultList"],
+                starList
+            ];
+        leftDefaultList = 
+            Complement[
+                clusterPropGet[cluster,"starDefaultList"],
+                starList
+            ];
+        If[ removedDefaultList=!={},
+            Message[starUnset::rmdefault,removedDefaultList]
+        ];
+        clusterPropSet[cluster,"starDefaultList"->leftDefaultList];
+    ];
+
+
+(* ::Subsubsection:: *)
 (*starDefine*)
 
 
@@ -271,7 +326,7 @@ starDefine[cluster_Symbol?clusterQ,starList_List] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*starDefault*)
 
 
@@ -289,7 +344,7 @@ starDefault[cluster_Symbol?clusterQ,starList_List] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*starReset*)
 
 
@@ -313,7 +368,7 @@ starReset[cluster_Symbol?clusterQ,starList_List] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*starUnset*)
 
 
@@ -344,26 +399,7 @@ starUnset[cluster_Symbol?clusterQ,starList_List] :=
     ];
 
 
-starUpdateDefaultWhenUnset[cluster_,starList_] :=
-    Module[ {removedDefaultList,leftDefaultList},
-        removedDefaultList = 
-            Intersection[
-                clusterPropGet[cluster,"starDefaultList"],
-                starList
-            ];
-        leftDefaultList = 
-            Complement[
-                clusterPropGet[cluster,"starDefaultList"],
-                starList
-            ];
-        If[ removedDefaultList=!={},
-            Message[starUnset::rmdefault,removedDefaultList]
-        ];
-        clusterPropSet[cluster,"starDefaultList"->leftDefaultList];
-    ];
-
-
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*starMerge*)
 
 
@@ -399,7 +435,7 @@ starMergeKernel[cluster_,star_,planetAssoc_] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*starChange*)
 
 
