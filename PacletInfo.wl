@@ -8,7 +8,7 @@ PacletObject[
     "SourceControlURL" -> "https://github.com/yuriever/Yurie-Cluster",
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
-    "Version" -> "1.0.0",
+    "Version" -> "1.2.0",
     "WolframVersion" -> "13+",
     "PrimaryContext" -> "Yurie`Cluster`",
     "Extensions" -> {

@@ -14,19 +14,19 @@ Needs["Yurie`Cluster`"];
 (*Public*)
 
 
-cluster::usage = 
+cluster::usage =
     "head of cluster.";
 
-clusterQ::usage = 
+clusterQ::usage =
     "check whether the input is a cluster.";
 
-clusterInit::usage = 
+clusterInit::usage =
     "initiate cluster and bind to the symbol \"context`clusterName\".";
 
-clusterPropGet::usage = 
+clusterPropGet::usage =
     "get property of the cluster.";
 
-clusterPropSet::usage = 
+clusterPropSet::usage =
     "set property of the cluster.";
 
 
@@ -130,7 +130,7 @@ clusterStrip[cluster[data_],keyOrItsList_] :=
 (*clusterQ*)
 
 
-clusterQ//Attributes = 
+clusterQ//Attributes =
     {HoldFirst};
 
 clusterQ[self_Symbol] :=
@@ -141,7 +141,7 @@ clusterQ[self_Symbol] :=
 (*clusterPropGet*)
 
 
-clusterPropGet//Attributes = 
+clusterPropGet//Attributes =
     {HoldFirst};
 
 clusterPropGet[self_Symbol,propertyOrItsList_] :=
@@ -152,7 +152,7 @@ clusterPropGet[self_Symbol,propertyOrItsList_] :=
 (*clusterPropSet*)
 
 
-clusterPropSet//Attributes = 
+clusterPropSet//Attributes =
     {HoldFirst};
 
 clusterPropSet[self_Symbol,keyValueOrItsList_] :=

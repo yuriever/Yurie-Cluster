@@ -14,7 +14,7 @@ Needs["Yurie`Cluster`Info`"];
 (*Public*)
 
 
-testReport::usage = 
+testReport::usage =
     "get the report of unit test.";
 
 
@@ -35,18 +35,18 @@ Begin["`Private`"];
 
 testReport[] :=
     Module[ {report,selectedData},
-        report = 
+        report =
             TestReport@FileNames["*.wlt",$thisTestDir];
-        selectedData = 
+        selectedData =
             report["ResultsDataset"]//
-	            If[Normal@#!={},
-		            #[All,<|
-		                "input"->ToString[#Input],
-		                "starList"->Enclose[ConfirmMatch[ReleaseHold[#ActualOutput]["starList"],_List],Missing[]&],
-		                "starDefaultList"->Enclose[ConfirmMatch[ReleaseHold[#ActualOutput]["starDefaultList"],_List],Missing[]&],
-		                "starDefaultData"->Enclose[ConfirmMatch[ReleaseHold[#ActualOutput]["starDefaultData"],_Association],Missing[]&]
-		            |>&]//Dataset[#,MaxItems->{All,All,4}]&
-	            ]&;
+	            If[ Normal@#!={},
+                    #[All,<|
+                        "input"->ToString[#Input],
+                        "starList"->Enclose[ConfirmMatch[ReleaseHold[#ActualOutput]["starList"],_List],Missing[]&],
+                        "starDefaultList"->Enclose[ConfirmMatch[ReleaseHold[#ActualOutput]["starDefaultList"],_List],Missing[]&],
+                        "starDefaultData"->Enclose[ConfirmMatch[ReleaseHold[#ActualOutput]["starDefaultData"],_Association],Missing[]&]
+                    |>&]//Dataset[#,MaxItems->{All,All,4}]&
+                ]&;
         CellPrint@{
             ExpressionCell[report["ResultsByOutcome"]//Map[Column]//TabView,"Output"],
             ExpressionCell[selectedData,"Output"]

@@ -54,7 +54,7 @@ VerificationTest[
     ,
     <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,star2-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>|>,"starDefaultList"->{},"starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>|>
     ,
-    {Yurie`Cluster`Star`starDefineCheck::stardef}
+    {Yurie`Cluster`cluster::stardef}
     ,
     TestID->"starDefine-report-defined-star"
 ]
@@ -65,7 +65,7 @@ VerificationTest[
     ,
     <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{star1,star2},"starData"-><|star1-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,star2-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>|>,"starDefaultList"->{},"starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>|>
     ,
-    {Yurie`Cluster`Star`starDefineCheck::starundef}
+    {Yurie`Cluster`cluster::starundef}
     ,
     TestID->"starDefault-report-undefined-star"
 ]
@@ -114,7 +114,7 @@ VerificationTest[
     ,
     <|"clusterName"->"cluster1","planetList"->{planet1,planet2,planet3,planet4},"planetCommonData"-><|planet1->{a[1]},planet2->{b[1]},planet3->{c[1]},planet4->{d[1]}|>,"planetExtraData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>,"planetMergeData"-><|planet1->Join,planet2->Sort@*Join,planet3->Union,planet4->Sort@*Union|>,"starList"->{},"starData"-><||>,"starDefaultList"->{},"starDefaultData"-><|planet1->{a[0]},planet2->{b[0]},planet3->{c[0]},planet4->{d[0]}|>|>
     ,
-    {Yurie`Cluster`starUnset::rmdefault,Yurie`Cluster`starUnset::rmdefault}
+    {Yurie`Cluster`cluster::rmdefault,Yurie`Cluster`cluster::rmdefault}
     ,
     TestID->"starUnset"
 ]

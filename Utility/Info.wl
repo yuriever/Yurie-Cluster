@@ -31,16 +31,16 @@ Begin["`Private`"];
 (*Main*)
 
 
-$thisPaclet = 
+$thisPaclet =
     PacletObject["Yurie/Cluster"];
     
-$thisPacletDir = 
+$thisPacletDir =
     $thisPaclet["Location"];
 
-$thisKernelDir = 
+$thisKernelDir =
     FileNameJoin@{$thisPacletDir,"Kernel"};
 
-$thisTestDir = 
+$thisTestDir =
     $thisPaclet["AssetLocation","Test"];
 
 
