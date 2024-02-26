@@ -14,10 +14,6 @@ BeginPackage["Yurie`Cluster`"];
 Get["Yurie`Cluster`Usage`"];
 
 
-(* ::Subsection:: *)
-(*Subpackage*)
-
-
 Get["Yurie`Cluster`Cluster`"];
 
 Get["Yurie`Cluster`Star`"];
