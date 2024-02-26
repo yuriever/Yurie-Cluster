@@ -115,8 +115,6 @@ getTransposedAssocListAndKeyList[assocList_,ruleList_] :=
     ];
 
 
-(*prepare the rules for query and delete the unnecessary Identity query.*)
-
 prepareQueryRuleList[ruleList_,keyList_,default_] :=
     DeleteCases[
         Thread[

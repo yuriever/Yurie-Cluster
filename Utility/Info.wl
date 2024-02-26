@@ -12,7 +12,9 @@ BeginPackage["Yurie`Cluster`Info`"];
 
 
 $thisPacletDir;
+
 $thisKernelDir;
+
 $thisTestDir;
 
 
@@ -33,7 +35,7 @@ Begin["`Private`"];
 
 $thisPaclet =
     PacletObject["Yurie/Cluster"];
-    
+
 $thisPacletDir =
     $thisPaclet["Location"];
 

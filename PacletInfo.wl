@@ -23,8 +23,7 @@ PacletObject[
         "Kernel",
         "Root" -> "Utility",
         "Context" -> {
-          "Yurie`Cluster`Info`",
-          "Yurie`Cluster`Test`"
+          "Yurie`Cluster`Info`"
         }
       },
       {

@@ -66,6 +66,70 @@ $clusterPropList = {
 
 
 (* ::Subsection:: *)
+(*Main*)
+
+
+(* ::Subsubsection:: *)
+(*cluster*)
+
+
+cl_cluster[property_] :=
+    clusterStrip[cl,property];
+
+
+(*atomization*)
+
+cl_cluster/;System`Private`HoldNotValidQ[cl] :=
+    (
+        System`Private`HoldSetValid[cl];
+        System`Private`HoldSetNoEntry[cl]
+    );
+
+
+(*format*)
+
+cluster/:MakeBoxes[cl_cluster,format:StandardForm]:=
+    With[ {},
+        BoxForm`ArrangeSummaryBox[
+            (*head*)
+            clusterStrip[cl,"clusterName"],
+            (*data*)
+            cl,
+            (*icon*)
+            "",
+            (*always visible*)
+            {
+                {
+                    BoxForm`SummaryItem[{"Default stars: ",clusterStrip[cl,"starDefaultList"]}]
+                },
+                {
+                    BoxForm`SummaryItem[{"Planet: ",clusterStrip[cl,"planetList"]}]
+                }
+            },
+            (*sometimes visible*)
+            {
+                {
+                    BoxForm`SummaryItem[{"Common: ",clusterStrip[cl,"planetCommonData"]}]
+                }
+            },
+            format,
+            "Interpretable"->Automatic
+        ]
+    ];
+
+
+(* ::Subsubsection:: *)
+(*clusterQ*)
+
+
+clusterQ//Attributes =
+    {HoldFirst};
+
+clusterQ[self_Symbol] :=
+    Head[self]===cluster;
+
+
+(* ::Subsubsection:: *)
 (*clusterInit*)
 
 
@@ -104,40 +168,7 @@ clusterInit[
     ];
 
 
-(* ::Subsection:: *)
-(*cluster*)
-
-
-cl_cluster[property_] :=
-    clusterStrip[cl,property];
-
-
-(* ::Subsection:: *)
-(*clusterStrip*)
-
-
-clusterStrip[_cluster,"property"] :=
-    $clusterPropList;
-
-clusterStrip[cluster[data_],"data"] :=
-    data;
-
-clusterStrip[cluster[data_],keyOrItsList_] :=
-    data[[keyOrItsList]];
-
-
-(* ::Subsection:: *)
-(*clusterQ*)
-
-
-clusterQ//Attributes =
-    {HoldFirst};
-
-clusterQ[self_Symbol] :=
-    Head@self===cluster;
-
-
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*clusterPropGet*)
 
 
@@ -148,7 +179,7 @@ clusterPropGet[self_Symbol,propertyOrItsList_] :=
     clusterStrip[self,propertyOrItsList];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*clusterPropSet*)
 
 
@@ -163,48 +194,21 @@ clusterPropSet[self_Symbol,keyValueOrItsList_] :=
 
 
 (* ::Subsection:: *)
-(*Atomization*)
+(*Helper*)
 
 
-cl_cluster/;System`Private`HoldNotValidQ[cl] :=
-    (
-        System`Private`HoldSetValid[cl];
-        System`Private`HoldSetNoEntry[cl]
-    );
+(* ::Subsubsection:: *)
+(*clusterStrip*)
 
 
-(* ::Subsection:: *)
-(*Format*)
+clusterStrip[_cluster,"property"] :=
+    $clusterPropList;
 
+clusterStrip[cluster[data_],"data"] :=
+    data;
 
-cluster/:MakeBoxes[cl_cluster,format:StandardForm]:=
-    With[ {},
-        BoxForm`ArrangeSummaryBox[
-            (*head*)
-            clusterStrip[cl,"clusterName"],
-            (*data*)
-            cl,
-            (*icon*)
-            "",
-            (*always visible*)
-            {
-                {
-                    BoxForm`SummaryItem[{"Default stars: ",clusterStrip[cl,"starDefaultList"]}]
-                },
-                {
-                    BoxForm`SummaryItem[{"Planet: ",clusterStrip[cl,"planetList"]}]
-                }
-            },
-            (*sometimes visible*)
-            {
-                {
-                    BoxForm`SummaryItem[{"Common: ",clusterStrip[cl,"planetCommonData"]}]
-                }
-            },
-            format,
-            "Interpretable"->Automatic
-        ]
-    ];
+clusterStrip[cluster[data_],keyOrItsList_] :=
+    data[[keyOrItsList]];
 
 
 (* ::Subsection:: *)
