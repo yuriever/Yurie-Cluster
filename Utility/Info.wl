@@ -11,11 +11,14 @@ BeginPackage["Yurie`Cluster`Info`"];
 (*Public*)
 
 
-$thisPacletDir;
+$thisPacletDir::usage =
+    "directory of paclet.";
 
-$thisKernelDir;
+$thisKernelDir::usage =
+    "directory of kernel.";
 
-$thisTestDir;
+$thisTestDir::usage =
+    "directory of unit test.";
 
 
 (* ::Section:: *)
