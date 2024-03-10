@@ -89,32 +89,30 @@ cl_cluster/;System`Private`HoldNotValidQ[cl] :=
 (*format*)
 
 cluster/:MakeBoxes[cl_cluster,format:StandardForm]:=
-    With[ {},
-        BoxForm`ArrangeSummaryBox[
-            (*head*)
-            clusterStrip[cl,"clusterName"],
-            (*data*)
-            cl,
-            (*icon*)
-            "",
-            (*always visible*)
+    BoxForm`ArrangeSummaryBox[
+        (*head*)
+        clusterStrip[cl,"clusterName"],
+        (*data*)
+        cl,
+        (*icon*)
+        "",
+        (*always visible*)
+        {
             {
-                {
-                    BoxForm`SummaryItem[{"Default stars: ",clusterStrip[cl,"starDefaultList"]}]
-                },
-                {
-                    BoxForm`SummaryItem[{"Planet: ",clusterStrip[cl,"planetList"]}]
-                }
+                BoxForm`SummaryItem[{"Default stars: ",clusterStrip[cl,"starDefaultList"]}]
             },
-            (*sometimes visible*)
             {
-                {
-                    BoxForm`SummaryItem[{"Common: ",clusterStrip[cl,"planetCommonData"]}]
-                }
-            },
-            format,
-            "Interpretable"->Automatic
-        ]
+                BoxForm`SummaryItem[{"Planet: ",clusterStrip[cl,"planetList"]}]
+            }
+        },
+        (*sometimes visible*)
+        {
+            {
+                BoxForm`SummaryItem[{"Common: ",clusterStrip[cl,"planetCommonData"]}]
+            }
+        },
+        format,
+        "Interpretable"->Automatic
     ];
 
 
