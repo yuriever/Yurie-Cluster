@@ -1,6 +1,6 @@
 # Yurie/Cluster
 
-Paclet
+Designed to manage a specific form of class composition.
 
 ## How to use
 
