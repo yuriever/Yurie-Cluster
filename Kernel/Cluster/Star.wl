@@ -124,6 +124,22 @@ prepareQueryRuleList[ruleList_,keyList_,default_] :=
     ];
 
 
+(* ::Subsubsection:: *)
+(*listComplement*)
+
+
+listComplement[list1_List,list2_List] :=
+    DeleteCases[list1,Alternatives@@list2];
+
+
+(* ::Subsubsection:: *)
+(*listIntersection*)
+
+
+listIntersection[list1_List,list2_List] :=
+    Cases[list1,Alternatives@@list2];
+
+
 (* ::Subsection:: *)
 (*Main*)
 
@@ -133,22 +149,9 @@ prepareQueryRuleList[ruleList_,keyList_,default_] :=
 
 
 SetAttributes[{
-    starDefineQ,
-    starDefineCheck,
-    starUpdateDefault,
-    starUpdateDefaultWhenUnset,
-    (**)
-    starPreIntercept,
-    starPostIntercept,
-    (**)
-    starDefine,
-    starDefault,
-    starReset,
-    starUnset,
-    starMerge,
-    starMergeKernel,
-    starChange,
-    starChangeKernel
+    starDefineSplit,starDefineCheck,starUpdateDefault,starUpdateDefaultWhenUnset,
+    starPreIntercept,starPostIntercept,
+    starDefine,starDefault,starReset,starUnset,starMerge,starMergeKernel,starChange,starChangeKernel
 },HoldFirst];
 
 
@@ -156,8 +159,8 @@ SetAttributes[{
 (*Message*)
 
 
-starDefineQ::usage =
-    "check whether the star is defined, or split the list of stars into defined and undefined.";
+starDefineSplit::usage =
+    "split the list of stars into defined and undefined.";
 
 starDefineCheck::usage =
     "check the input before calling public methods.";
@@ -186,16 +189,14 @@ cluster::rmdefault =
 (*starDefineQ*)
 
 
-starDefineQ[cl_,star_] :=
-    MemberQ[clusterPropGet[cl,"StarList"],star];
-
-starDefineQ[cl_,starList_List] :=
+starDefineSplit[cl_,starList_List] :=
     <|
-        True->Intersection[
-            starList,
-            clusterPropGet[cl,"StarList"]
+        (*keep the ordering of "StarList".*)
+        True->listIntersection[
+            clusterPropGet[cl,"StarList"],
+            starList
         ],
-        False->Complement[
+        False->listComplement[
             starList,
             clusterPropGet[cl,"StarList"]
         ]
@@ -209,7 +210,7 @@ starDefineQ[cl_,starList_List] :=
 starDefineCheck[cl_,"starReportUndefAndReturnDef",starList_] :=
     Module[ {starIfExist},
         starIfExist =
-            starDefineQ[cl,starList];
+            starDefineSplit[cl,starList];
         If[ starIfExist[False]=!={},
             Message[cluster::starundef,clusterPropGet[cl,"ClusterName"],starIfExist[False]]
         ];
@@ -219,7 +220,7 @@ starDefineCheck[cl_,"starReportUndefAndReturnDef",starList_] :=
 starDefineCheck[cl_,"starReportDefAndReturnUndef",starList_] :=
     Module[ {starIfExist},
         starIfExist =
-            starDefineQ[cl,starList];
+            starDefineSplit[cl,starList];
         If[ starIfExist[True]=!={},
             Message[cluster::stardef,clusterPropGet[cl,"ClusterName"],starIfExist[True]]
         ];
@@ -229,7 +230,7 @@ starDefineCheck[cl_,"starReportDefAndReturnUndef",starList_] :=
 starDefineCheck[cl_,"planetAbortUndef",planetList_] :=
     Module[ {planetUndefList},
         planetUndefList =
-            Complement[
+            listComplement[
                 planetList,
                 clusterPropGet[cl,"PlanetList"]
             ];
@@ -266,12 +267,12 @@ starUpdateDefault[cl_] :=
 starUpdateDefaultWhenUnset[cl_,starList_] :=
     Module[ {removedDefaultList,leftDefaultList},
         removedDefaultList =
-            Intersection[
+            listIntersection[
                 clusterPropGet[cl,"StarDefaultList"],
                 starList
             ];
         leftDefaultList =
-            Complement[
+            listComplement[
                 clusterPropGet[cl,"StarDefaultList"],
                 starList
             ];
@@ -362,7 +363,7 @@ starUnset[cl_Symbol?clusterQ,starList_List] :=
             starDefineCheck[cl,"starReportUndefAndReturnDef",starList];
         (*build the new star list and data.*)
         newStarList =
-            Complement[
+            listComplement[
                 clusterPropGet[cl,"StarList"],
                 starDefList
             ];
