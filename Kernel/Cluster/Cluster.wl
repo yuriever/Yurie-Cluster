@@ -21,7 +21,7 @@ clusterQ::usage =
     "check whether the input is a cluster.";
 
 clusterInit::usage =
-    "initiate cluster and bind to the symbol \"context`clusterName\".";
+    "initiate the cluster and bind it to the symbol \"context`clusterName\".";
 
 clusterPropGet::usage =
     "get property of the cluster.";

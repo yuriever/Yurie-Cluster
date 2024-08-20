@@ -18,7 +18,7 @@ starDefine::usage =
     "define the stars.";
 
 starDefault::usage =
-    "set the stars into default.";
+    "set the stars to default.";
 
 starReset::usage =
     "reset the stars.";
@@ -169,7 +169,7 @@ starUpdateDefault::usage =
     "update starDefaultData by starDefaultList after starDefault, starReset, starUnset, starMerge and starChange.";
 
 starUpdateDefaultWhenUnset::usage =
-    "remove the stars both in the input and the default star list, used by starUnset.";
+    "remove the stars in both the input and the default star list, used by starUnset.";
 
 
 cluster::starundef =
@@ -186,7 +186,7 @@ cluster::rmdefault =
 
 
 (* ::Subsubsection:: *)
-(*starDefineQ*)
+(*starDefineSplit*)
 
 
 starDefineSplit[cl_,starList_List] :=

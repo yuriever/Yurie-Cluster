@@ -1,6 +1,4 @@
-
-
-(*Cluster.wl*)
+(* Cluster.wl *)
 
 cluster::usage =
 	"head of cluster.";
@@ -9,7 +7,7 @@ clusterQ::usage =
 	"check whether the input is a cluster.";
 
 clusterInit::usage =
-	"initiate cluster and bind to the symbol \"context`clusterName\".";
+	"initiate the cluster and bind it to the symbol \"context`clusterName\".";
 
 clusterPropGet::usage =
 	"get property of the cluster.";
@@ -18,13 +16,13 @@ clusterPropSet::usage =
 	"set property of the cluster.";
 
 
-(*Star.wl*)
+(* Star.wl *)
 
 starDefine::usage =
 	"define the stars.";
 
 starDefault::usage =
-	"set the stars into default.";
+	"set the stars to default.";
 
 starReset::usage =
 	"reset the stars.";
