@@ -2,6 +2,10 @@
 
 This paclet is designed to implement a specific form of class composition.
 
+## Documentation
+
+<https://yuriever.github.io/symbolic/Yurie__Cluster/doc/>
+
 ## Install
 
 Install from this repository:
@@ -41,7 +45,3 @@ PacletInstall["Yurie/Cluster"]
 ``` wl
 PacletUninstall["Yurie/Cluster"]
 ```
-
-## Documentation
-
-<https://yuriever.github.io/symbolic/package/Cluster/>
