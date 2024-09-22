@@ -57,7 +57,7 @@ VerificationTest[
 	starDefine[cluster1, {star1}]; 
 	cluster1["Data"]
 	,
-	Association["ClusterName" -> "cluster1", "PlanetList" -> {planet1, planet2, planet3, planet4}, "PlanetCommonData" -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], "PlanetExtraData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}], "PlanetMergeData" -> Association[planet1 -> Join, planet2 -> Sort @* Join, planet3 -> Union, planet4 -> Sort @* Union], "StarList" -> {star1, star2}, "StarData" -> Association[star1 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], star2 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}]], "StarDefaultList" -> {}, "StarDefaultData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}]]
+	Quiet[Association["ClusterName" -> "cluster1", "PlanetList" -> {planet1, planet2, planet3, planet4}, "PlanetCommonData" -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], "PlanetExtraData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}], "PlanetMergeData" -> Association[planet1 -> Join, planet2 -> Sort @* Join, planet3 -> Union, planet4 -> Sort @* Union], "StarList" -> {star1, star2}, "StarData" -> Association[star1 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], star2 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}]], "StarDefaultList" -> {}, "StarDefaultData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}]]]
 	,
 	{Yurie`Cluster`cluster::stardef}
 	,
@@ -68,7 +68,7 @@ VerificationTest[
 	starDefault[cluster1, {star3}]; 
 	cluster1["Data"]
 	,
-	Association["ClusterName" -> "cluster1", "PlanetList" -> {planet1, planet2, planet3, planet4}, "PlanetCommonData" -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], "PlanetExtraData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}], "PlanetMergeData" -> Association[planet1 -> Join, planet2 -> Sort @* Join, planet3 -> Union, planet4 -> Sort @* Union], "StarList" -> {star1, star2}, "StarData" -> Association[star1 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], star2 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}]], "StarDefaultList" -> {}, "StarDefaultData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}]]
+	Quiet[Association["ClusterName" -> "cluster1", "PlanetList" -> {planet1, planet2, planet3, planet4}, "PlanetCommonData" -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], "PlanetExtraData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}], "PlanetMergeData" -> Association[planet1 -> Join, planet2 -> Sort @* Join, planet3 -> Union, planet4 -> Sort @* Union], "StarList" -> {star1, star2}, "StarData" -> Association[star1 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], star2 -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}]], "StarDefaultList" -> {}, "StarDefaultData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}]]]
 	,
 	{Yurie`Cluster`cluster::starundef}
 	,
@@ -117,7 +117,7 @@ VerificationTest[
 	starUnset[cluster1, {star2}]; 
 	cluster1["Data"]
 	,
-	Association["ClusterName" -> "cluster1", "PlanetList" -> {planet1, planet2, planet3, planet4}, "PlanetCommonData" -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], "PlanetExtraData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}], "PlanetMergeData" -> Association[planet1 -> Join, planet2 -> Sort @* Join, planet3 -> Union, planet4 -> Sort @* Union], "StarList" -> {}, "StarData" -> Association[], "StarDefaultList" -> {}, "StarDefaultData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}]]
+	Quiet[Association["ClusterName" -> "cluster1", "PlanetList" -> {planet1, planet2, planet3, planet4}, "PlanetCommonData" -> Association[planet1 -> {a[1]}, planet2 -> {b[1]}, planet3 -> {c[1]}, planet4 -> {d[1]}], "PlanetExtraData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}], "PlanetMergeData" -> Association[planet1 -> Join, planet2 -> Sort @* Join, planet3 -> Union, planet4 -> Sort @* Union], "StarList" -> {}, "StarData" -> Association[], "StarDefaultList" -> {}, "StarDefaultData" -> Association[planet1 -> {a[0]}, planet2 -> {b[0]}, planet3 -> {c[0]}, planet4 -> {d[0]}]]]
 	,
 	{Yurie`Cluster`cluster::rmdefault,Yurie`Cluster`cluster::rmdefault}
 	,
