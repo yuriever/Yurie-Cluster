@@ -3,7 +3,7 @@
 PacletObject[
   <|
     "Name" -> "Yurie/Cluster",
-    "Description" -> "This paclet is designed to implement a specific form of class composition",
+    "Description" -> "A Mathematica paclet for implementing a specific form of class composition",
     "Creator" -> "Yurie",
     "SourceControlURL" -> "https://github.com/yuriever/Yurie-Cluster",
     "License" -> "MIT",

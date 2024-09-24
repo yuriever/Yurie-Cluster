@@ -1,6 +1,6 @@
 # Yurie/Cluster
 
-This paclet is designed to implement a specific form of class composition.
+A Mathematica paclet for implementing a specific form of class composition.
 
 ## Documentation
 
