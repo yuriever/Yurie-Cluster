@@ -4,7 +4,7 @@ A Mathematica paclet for implementing a specific form of class composition.
 
 ## Documentation
 
-<https://yuriever.github.io/symbolic/Yurie__Cluster/doc/>
+<https://yuriever.github.io/symbolic/Yurie-Cluster/doc/>
 
 ## Install
 
