@@ -9,7 +9,7 @@ PacletObject[
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
     "Version" -> "2.0.0",
-    "WolframVersion" -> "14.1+",
+    "WolframVersion" -> "14.2+",
     "PrimaryContext" -> "Yurie`Cluster`",
     "Extensions" -> {
       {
