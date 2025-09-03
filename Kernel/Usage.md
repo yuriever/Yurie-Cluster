@@ -6,9 +6,9 @@
 
 * `#!wl clusterInit` - initiate the cluster and bind it to the symbol \"context\`clusterName\".
 
-* `#!wl clusterPropGet` - get property of the cluster.
+* `#!wl clusterGet` - get property of the cluster.
 
-* `#!wl clusterPropSet` - set property of the cluster.
+* `#!wl clusterSet` - set property of the cluster.
 
 
 <!-- Star.wl -->

@@ -23,10 +23,10 @@ clusterQ::usage =
 clusterInit::usage =
     "initiate the cluster and bind it to the symbol \"context`clusterName\".";
 
-clusterPropGet::usage =
+clusterGet::usage =
     "get property of the cluster.";
 
-clusterPropSet::usage =
+clusterSet::usage =
     "set property of the cluster.";
 
 
@@ -77,7 +77,7 @@ cl_cluster[property_] :=
     clusterStrip[cl,property];
 
 
-(*atomization*)
+(* Atomization *)
 
 cl_cluster/;System`Private`HoldNotValidQ[cl] :=
     (
@@ -86,17 +86,17 @@ cl_cluster/;System`Private`HoldNotValidQ[cl] :=
     );
 
 
-(*format*)
+(* Format *)
 
 cluster/:MakeBoxes[cl_cluster,format:StandardForm]:=
     BoxForm`ArrangeSummaryBox[
-        (*head*)
+        (* Head *)
         clusterStrip[cl,"ClusterName"],
-        (*data*)
+        (* Data *)
         cl,
-        (*icon*)
+        (* Icon *)
         "",
-        (*always visible*)
+        (* Always visible *)
         {
             {
                 BoxForm`SummaryItem[{"Default stars: ",clusterStrip[cl,"StarDefaultList"]}]
@@ -105,7 +105,7 @@ cluster/:MakeBoxes[cl_cluster,format:StandardForm]:=
                 BoxForm`SummaryItem[{"Planet: ",clusterStrip[cl,"PlanetList"]}]
             }
         },
-        (*sometimes visible*)
+        (* Sometimes visible *)
         {
             {
                 BoxForm`SummaryItem[{"Common: ",clusterStrip[cl,"PlanetCommonData"]}]
@@ -142,23 +142,23 @@ clusterInit[
             clean = ClearAll@Evaluate[context<>clusterName],
             self = ToExpression[context<>clusterName],
             data = AssociationThread[$clusterKeyList->{
-                (*"ClusterName"*)
+                (* "ClusterName" *)
                 clusterName,
-                (*"PlanetList"*)
+                (* "PlanetList" *)
                 planetList,
-                (*"PlanetCommonData"*)
+                (* "PlanetCommonData" *)
                 AssociationThread[planetList->planetCommonDataList],
-                (*"PlanetExtraData"*)
+                (* "PlanetExtraData" *)
                 AssociationThread[planetList->planetExtraDataList],
-                (*"PlanetMergeData"*)
+                (* "PlanetMergeData" *)
                 AssociationThread[planetList->planetMergeDataList],
-                (*"StarList"*)
+                (* "StarList" *)
                 {},
-                (*"StarData"*)
+                (* "StarData" *)
                 <||>,
-                (*"StarDefaultList"*)
+                (* "StarDefaultList" *)
                 {},
-                (*"StarDefaultData"*)
+                (* "StarDefaultData" *)
                 AssociationThread[planetList->planetExtraDataList]
             }]
         },
@@ -167,24 +167,24 @@ clusterInit[
 
 
 (* ::Subsubsection:: *)
-(*clusterPropGet*)
+(*clusterGet*)
 
 
-clusterPropGet//Attributes =
+clusterGet//Attributes =
     {HoldFirst};
 
-clusterPropGet[self_Symbol,propertyOrItsList_] :=
+clusterGet[self_Symbol,propertyOrItsList_] :=
     clusterStrip[self,propertyOrItsList];
 
 
 (* ::Subsubsection:: *)
-(*clusterPropSet*)
+(*clusterSet*)
 
 
-clusterPropSet//Attributes =
+clusterSet//Attributes =
     {HoldFirst};
 
-clusterPropSet[self_Symbol,keyValueOrItsList_] :=
+clusterSet[self_Symbol,keyValueOrItsList_] :=
     With[ {data = clusterStrip[self,"Data"]},
         (*the symbol should be rebound to the new cluster.*)
         self = cluster[<|data,keyValueOrItsList|>]
