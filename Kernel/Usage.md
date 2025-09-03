@@ -21,6 +21,8 @@
 
 * `#!wl starUnset` - unset the stars, and update the default star list.
 
+* `#!wl starDefineReset` - define the stars and reset the existing ones.
+
 * `#!wl starMerge` - merge planet data to the stars.
 
 * `#!wl starChange` - change planet data to the stars by the functions.

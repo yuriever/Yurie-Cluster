@@ -26,6 +26,10 @@ starReset::usage =
 starUnset::usage =
     "unset the stars, and update the default star list.";
 
+starDefineReset::usage =
+    "define the stars and reset the existing ones.";
+
+
 starMerge::usage =
     "merge planet data to the stars.";
 
@@ -159,7 +163,9 @@ listFormatInMessage[list_List] :=
 SetAttributes[{
     starDefineSplit,starDefineCheck,starUpdateDefault,starUpdateDefaultWhenUnset,
     starPreIntercept,starPostIntercept,
-    starDefine,starDefault,starReset,starUnset,starMerge,starMergeKernel,starChange,starChangeKernel
+    starDefine,starDefault,starReset,starUnset,starDefineReset,
+    starMerge,starMergeKernel,
+    starChange,starChangeKernel
 },HoldFirst];
 
 
@@ -378,6 +384,19 @@ starUnset[cl_Symbol?clusterQ,starList_List] :=
         starUpdateDefaultWhenUnset[cl,starDefList];
         (* Update to the default star. *)
         starUpdateDefault[cl];
+    ];
+
+
+(* ::Subsubsection:: *)
+(*starDefineReset*)
+
+
+starDefineReset[cl_Symbol?clusterQ,starList_List] :=
+    With[ {
+            starDefUndef = starDefineSplit[cl,starList]
+        },
+        starDefine[cl,starDefUndef[False]];
+        starReset[cl,starDefUndef[True]];
     ];
 
 

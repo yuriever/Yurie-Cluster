@@ -30,6 +30,9 @@ starReset::usage =
 starUnset::usage =
     "unset the stars, and update the default star list.";
 
+starDefineReset::usage =
+    "define the stars and reset the existing ones.";
+
 starMerge::usage =
     "merge planet data to the stars.";
 
