@@ -104,7 +104,7 @@ getTransposedAssocListAndKeyList[assocList_,ruleList_] :=
                     keyList,
                     Transpose@Values[assocList]
                 ],
-            (*Else*)
+            (* Else *)
             dataPadded =
                 KeyUnion[assocList,missing&];
             keyList =
@@ -145,11 +145,23 @@ listIntersection[list1_List,list2_List] :=
 
 
 (* ::Subsubsection:: *)
-(*listFormatInMessage*)
+(*formattedMessage*)
 
 
-listFormatInMessage[list_List] :=
+formattedMessage//Attributes = {
+    HoldFirst
+};
+
+
+formattedMessage[msg_,args___] :=
+    Message[msg,Sequence@@Map[messageArgForm,{args}]];
+
+
+messageArgForm[list_List] :=
     Row[Map[Style[#,StandardBlue]&,list],","];
+
+messageArgForm[expr_] :=
+    Style[expr,StandardBlue];
 
 
 (* ::Subsection:: *)
@@ -224,7 +236,7 @@ starDefineCheck[cl_,"StarReportUndefAndReturnDef",starList_] :=
             starIfExist = starDefineSplit[cl,starList]
         },
         If[ starIfExist[False]=!={},
-            Message[General::StarUndef,clusterGet[cl,"ClusterName"],listFormatInMessage[starIfExist[False]]]
+            formattedMessage[General::StarUndef,clusterGet[cl,"ClusterName"],starIfExist[False]]
         ];
         starIfExist[True]
     ];
@@ -234,7 +246,7 @@ starDefineCheck[cl_,"StarReportDefAndReturnUndef",starList_] :=
             starIfExist = starDefineSplit[cl,starList]
         },
         If[ starIfExist[True]=!={},
-            Message[General::StarDef,clusterGet[cl,"ClusterName"],listFormatInMessage[starIfExist[True]]]
+            formattedMessage[General::StarDef,clusterGet[cl,"ClusterName"],starIfExist[True]]
         ];
         starIfExist[False]
     ];
@@ -245,7 +257,7 @@ starDefineCheck[cl_,"PlanetThrowUndef",planetList_] :=
             planetUndefList = listComplement[planetList,clusterGet[cl,"PlanetList"]]
         },
         If[ planetUndefList=!={},
-            Message[General::PlanetUndef,clusterGet[cl,"ClusterName"],listFormatInMessage[planetUndefList]];
+            formattedMessage[General::PlanetUndef,clusterGet[cl,"ClusterName"],planetUndefList];
             Throw[$Failed]
         ];
     ];
@@ -281,7 +293,7 @@ starUpdateDefaultWhenUnset[cl_,starList_] :=
             leftDefaultList = listComplement[clusterGet[cl,"StarDefaultList"],starList]
         },
         If[ removedDefaultList=!={},
-            Message[General::StarRemoveDefault,clusterGet[cl,"ClusterName"],listFormatInMessage[removedDefaultList]]
+            formattedMessage[General::StarRemoveDefault,clusterGet[cl,"ClusterName"],removedDefaultList]
         ];
         clusterSet[cl,"StarDefaultList"->leftDefaultList];
     ];
