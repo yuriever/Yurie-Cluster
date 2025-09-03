@@ -132,15 +132,13 @@ clusterQ[self_Symbol] :=
 
 
 clusterInit[
-    {clusterName_String,context_String},
+    clusterName_String,
     planetList_List,
     planetCommonDataList_List,
     planetExtraDataList_List,
     planetMergeDataList_List
 ] :=
     With[ {
-            clean = ClearAll@Evaluate[context<>clusterName],
-            self = ToExpression[context<>clusterName],
             data = AssociationThread[$clusterKeyList->{
                 (* "ClusterName" *)
                 clusterName,
@@ -162,7 +160,7 @@ clusterInit[
                 AssociationThread[planetList->planetExtraDataList]
             }]
         },
-        self = cluster[data]
+        cluster[data]
     ];
 
 
