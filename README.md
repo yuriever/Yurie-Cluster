@@ -5,9 +5,7 @@
 
 A Mathematica paclet for implementing a specific form of class composition.
 
-
 ## [Documentation](https://yuriever.github.io/symbolic/Yurie-Cluster/doc/)
-
 
 ## Usage
 
@@ -31,13 +29,11 @@ A Mathematica paclet for implementing a specific form of class composition.
     Needs["Yurie`Cluster`"]
     ```
 
-
 ### Uninstallation
 
 ```wl
 PacletUninstall["Yurie/Cluster"]
 ```
-
 
 ### Installation checking
 
